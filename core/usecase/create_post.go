@@ -8,9 +8,10 @@ type createPostUseCase struct {
 }
 
 type NewPostInput struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	CreatorName string `json:"creatorName"`
+	Title       string       `json:"title"`
+	Description string       `json:"description"`
+	CreatorName string       `json:"creatorName"`
+	Tags        []domain.Tag `json:"tags"`
 }
 
 func NewCreatePostUseCase(pr domain.IPostRepository, ar domain.IAuthorRepository) *createPostUseCase {
@@ -29,7 +30,7 @@ func (u createPostUseCase) Execute(input NewPostInput) error {
 	post := domain.NewPostWithAutoCompleteSlug(
 		input.Title,
 		input.Description,
-		nil,
+		input.Tags,
 		creator,
 	)
 	err = u.postRepository.Save(*post)

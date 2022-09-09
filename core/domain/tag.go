@@ -1,5 +1,5 @@
 package domain
 
 type Tag struct {
-	Name string
+	Name string `json:"name"`
 }
